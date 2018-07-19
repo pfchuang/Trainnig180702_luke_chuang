@@ -71,7 +71,19 @@ namespace BMS.Dao
         /// <returns></returns>
         public int AddBook(BMS.Model.BookAddArg arg)
         {
-            string sql = @"INSERT INTO BOOK_DATA
+            int bookId;
+            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName));
+                cmd.Parameters.Add(new SqlParameter("@BookAuthor", arg.BookAuthor));
+                cmd.Parameters.Add(new SqlParameter("@BookPublisher", arg.BookPublisher));
+                cmd.Parameters.Add(new SqlParameter("@BookBoughtDate", arg.BookBoughtDate));
+                cmd.Parameters.Add(new SqlParameter("@BookNote", arg.BookNote));
+                cmd.Parameters.Add(new SqlParameter("@BookClassID", arg.BookClass));
+                cmd.CommandText = @"INSERT INTO BOOK_DATA
                          (
                              BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER,
                              BOOK_BOUGHT_DATE, BOOK_NOTE, BOOK_CLASS_ID, BOOK_STATUS,
@@ -84,17 +96,6 @@ namespace BMS.Dao
                              '', GETDATE(), '3008'
                          )
                          SELECT SCOPE_IDENTITY()";
-            int bookId;
-            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName));
-                cmd.Parameters.Add(new SqlParameter("@BookAuthor", arg.BookAuthor));
-                cmd.Parameters.Add(new SqlParameter("@BookPublisher", arg.BookPublisher));
-                cmd.Parameters.Add(new SqlParameter("@BookBoughtDate", arg.BookBoughtDate));
-                cmd.Parameters.Add(new SqlParameter("@BookNote", arg.BookNote));
-                cmd.Parameters.Add(new SqlParameter("@BookClassID", arg.BookClass));
                 bookId = Convert.ToInt32(cmd.ExecuteScalar());
                 conn.Close();
             }
