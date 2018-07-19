@@ -36,25 +36,25 @@ namespace BMS.Dao
                 cmd.Parameters.Add(new SqlParameter("@BookClass", arg.BookClass ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookStatus", arg.BookStatus ?? string.Empty));
-				cmd.CommandText = "SELECT BOOK_DATA.BOOK_ID AS BookId,
-                                  BOOK_CLASS.BOOK_CLASS_NAME AS BookClass,
-                                  BOOK_DATA.BOOK_NAME AS BookName,
-                                  CONVERT(varchar(10), BOOK_DATA.BOOK_BOUGHT_DATE, 111) AS BookBoughtDate,
-                                  BOOK_CODE.CODE_NAME AS BookStatus,
-                                  CONCAT(MEMBER_M.USER_ENAME, '(', MEMBER_M.USER_CNAME, ')') AS BookKeeper 
-                           FROM BOOK_DATA
-	                         INNER JOIN BOOK_CLASS
-                               ON BOOK_DATA.BOOK_CLASS_ID = BOOK_CLASS.BOOK_CLASS_ID
-                             INNER JOIN BOOK_CODE 
-                               ON BOOK_DATA.BOOK_STATUS = BOOK_CODE.CODE_ID 
-	                         LEFT JOIN MEMBER_M 
-                               ON BOOK_DATA.BOOK_KEEPER = MEMBER_M.USER_ID
-                           WHERE (UPPER(BOOK_DATA.BOOK_NAME) LIKE UPPER('%' + @BookName + '%') OR @BookName = '') AND
-                                 (BOOK_DATA.BOOK_CLASS_ID = @BookClass OR @BookClass = '') AND
-                                 (BOOK_DATA.BOOK_KEEPER = @BookKeeper OR @BookKeeper = '') AND
-                                 (BOOK_DATA.BOOK_STATUS = @BookStatus OR @BookStatus = '') AND
-                                  BOOK_DATA.BOOK_BOUGHT_DATE < GETDATE()
-                           ORDER BY BookBoughtDate DESC";
+				cmd.CommandText = "SELECT BOOK_DATA.BOOK_ID AS BookId,"+
+                                  "BOOK_CLASS.BOOK_CLASS_NAME AS BookClass,"+
+                                  "BOOK_DATA.BOOK_NAME AS BookName,"+
+                                  "CONVERT(varchar(10), BOOK_DATA.BOOK_BOUGHT_DATE, 111) AS BookBoughtDate,"+
+                                  "BOOK_CODE.CODE_NAME AS BookStatus,"+
+                                  "CONCAT(MEMBER_M.USER_ENAME, '(', MEMBER_M.USER_CNAME, ')') AS BookKeeper "+
+                           "FROM BOOK_DATA"+
+	                         "INNER JOIN BOOK_CLASS"+
+                               "ON BOOK_DATA.BOOK_CLASS_ID = BOOK_CLASS.BOOK_CLASS_ID"+
+                             "INNER JOIN BOOK_CODE "+
+                               "ON BOOK_DATA.BOOK_STATUS = BOOK_CODE.CODE_ID "+
+	                         "LEFT JOIN MEMBER_M "+
+                               "ON BOOK_DATA.BOOK_KEEPER = MEMBER_M.USER_ID"+
+                           "WHERE (UPPER(BOOK_DATA.BOOK_NAME) LIKE UPPER('%' + @BookName + '%') OR @BookName = '') AND"+
+                                 "(BOOK_DATA.BOOK_CLASS_ID = @BookClass OR @BookClass = '') AND"+
+                                 "(BOOK_DATA.BOOK_KEEPER = @BookKeeper OR @BookKeeper = '') AND"+
+                                 "(BOOK_DATA.BOOK_STATUS = @BookStatus OR @BookStatus = '') AND"+
+                                  "BOOK_DATA.BOOK_BOUGHT_DATE < GETDATE()"+
+                           "ORDER BY BookBoughtDate DESC";
                 
                 SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
                 conn.Open();
