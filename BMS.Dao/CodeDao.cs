@@ -25,12 +25,11 @@ namespace BMS.Dao
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
-                string sql = @"SELECT DISTINCT BOOK_NAME AS Item
-                               FROM BOOK_DATA";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = sql;
+                cmd.CommandText = @"SELECT DISTINCT BOOK_NAME AS Item
+                                    FROM BOOK_DATA";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
                 dataAdapter.Fill(dt);
                 conn.Close();
