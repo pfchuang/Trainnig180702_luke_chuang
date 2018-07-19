@@ -46,22 +46,21 @@ namespace BMS.Dao
                                  (BOOK_DATA.BOOK_STATUS = @BookStatus OR @BookStatus = '') AND
                                   BOOK_DATA.BOOK_BOUGHT_DATE < GETDATE()
                            ORDER BY BookBoughtDate DESC";
-            SqlConnection conn = new SqlConnection(this.GetDBConnectionString());
+            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString())){
             
-                
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = conn;
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql);
                 
                 cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookClass", arg.BookClass ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookStatus", arg.BookStatus ?? string.Empty));
-                cmd.CommandText = sql;
+                cmd.Connection = conn;
                 SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
-                conn.Open();
+                
                 sqlAdapter.Fill(dt);
                 conn.Close();
-            
+            }
             return this.MapBookDataToList(dt);
         }
 
