@@ -51,11 +51,12 @@ namespace BMS.Dao
                 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = sql;
+                
                 cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookClass", arg.BookClass ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookStatus", arg.BookStatus ?? string.Empty));
+                cmd.CommandText = sql;
                 SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
                 conn.Open();
                 sqlAdapter.Fill(dt);
