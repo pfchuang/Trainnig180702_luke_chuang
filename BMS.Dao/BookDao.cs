@@ -48,13 +48,14 @@ namespace BMS.Dao
                            ORDER BY BookBoughtDate DESC";
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
-                conn.Open();
+                
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookClass", arg.BookClass ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookStatus", arg.BookStatus ?? string.Empty));
                 SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
+                conn.Open();
                 sqlAdapter.Fill(dt);
                 conn.Close();
             }
@@ -118,7 +119,8 @@ namespace BMS.Dao
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex);
+                throw;
             }
         }
 
@@ -161,7 +163,6 @@ namespace BMS.Dao
         /// <returns></returns>
         public BMS.Model.BookUpdateArg GetBookById(string bookId)
         {
-            //var bookId = id.ToString();
             DataTable dt = new DataTable();
             string sql = @"Select BOOK_ID, BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER, BOOK_NOTE,
                                   CONVERT(varchar(10), BOOK_BOUGHT_DATE, 111) AS BOOK_BOUGHT_DATE,
