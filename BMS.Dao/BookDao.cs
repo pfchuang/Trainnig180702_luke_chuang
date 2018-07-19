@@ -74,7 +74,7 @@ namespace BMS.Dao
             int bookId;
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
-                conn.Open();
+                
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName));
@@ -96,6 +96,7 @@ namespace BMS.Dao
                              '', GETDATE(), '3008'
                          )
                          SELECT SCOPE_IDENTITY()";
+                conn.Open();
                 bookId = Convert.ToInt32(cmd.ExecuteScalar());
                 conn.Close();
             }
