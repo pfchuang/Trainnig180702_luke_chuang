@@ -49,7 +49,9 @@ namespace BMS.Dao
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
                 
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
                 cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookClass", arg.BookClass ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
