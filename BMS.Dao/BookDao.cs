@@ -46,8 +46,8 @@ namespace BMS.Dao
                                  (BOOK_DATA.BOOK_STATUS = @BookStatus OR @BookStatus = '') AND
                                   BOOK_DATA.BOOK_BOUGHT_DATE < GETDATE()
                            ORDER BY BookBoughtDate DESC";
-            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
-            {
+            SqlConnection conn = new SqlConnection(this.GetDBConnectionString());
+            
                 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
@@ -61,7 +61,7 @@ namespace BMS.Dao
                 conn.Open();
                 sqlAdapter.Fill(dt);
                 conn.Close();
-            }
+            
             return this.MapBookDataToList(dt);
         }
 
