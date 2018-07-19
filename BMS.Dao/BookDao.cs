@@ -28,36 +28,33 @@ namespace BMS.Dao
         {
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString())){
-            
-                
+                conn.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookClass", arg.BookClass ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
                 cmd.Parameters.Add(new SqlParameter("@BookStatus", arg.BookStatus ?? string.Empty));
-				cmd.CommandText = "SELECT BOOK_DATA.BOOK_ID AS BookId,"+
-                                  "BOOK_CLASS.BOOK_CLASS_NAME AS BookClass,"+
-                                  "BOOK_DATA.BOOK_NAME AS BookName,"+
-                                  "CONVERT(varchar(10), BOOK_DATA.BOOK_BOUGHT_DATE, 111) AS BookBoughtDate,"+
-                                  "BOOK_CODE.CODE_NAME AS BookStatus,"+
-                                  "CONCAT(MEMBER_M.USER_ENAME, '(', MEMBER_M.USER_CNAME, ')') AS BookKeeper "+
-                           "FROM BOOK_DATA"+
-	                         "INNER JOIN BOOK_CLASS"+
-                               "ON BOOK_DATA.BOOK_CLASS_ID = BOOK_CLASS.BOOK_CLASS_ID"+
-                             "INNER JOIN BOOK_CODE "+
-                               "ON BOOK_DATA.BOOK_STATUS = BOOK_CODE.CODE_ID "+
-	                         "LEFT JOIN MEMBER_M "+
-                               "ON BOOK_DATA.BOOK_KEEPER = MEMBER_M.USER_ID"+
-                           "WHERE (UPPER(BOOK_DATA.BOOK_NAME) LIKE UPPER('%' + @BookName + '%') OR @BookName = '') AND"+
-                                 "(BOOK_DATA.BOOK_CLASS_ID = @BookClass OR @BookClass = '') AND"+
-                                 "(BOOK_DATA.BOOK_KEEPER = @BookKeeper OR @BookKeeper = '') AND"+
-                                 "(BOOK_DATA.BOOK_STATUS = @BookStatus OR @BookStatus = '') AND"+
-                                  "BOOK_DATA.BOOK_BOUGHT_DATE < GETDATE()"+
-                           "ORDER BY BookBoughtDate DESC";
-                
+				cmd.CommandText = @"SELECT BOOK_DATA.BOOK_ID AS BookId,
+                                        BOOK_CLASS.BOOK_CLASS_NAME AS BookClass,
+                                        BOOK_DATA.BOOK_NAME AS BookName,
+                                        CONVERT(varchar(10), BOOK_DATA.BOOK_BOUGHT_DATE, 111) AS BookBoughtDate,
+                                        BOOK_CODE.CODE_NAME AS BookStatus,
+                                        CONCAT(MEMBER_M.USER_ENAME, '(', MEMBER_M.USER_CNAME, ')') AS BookKeeper
+                                    FROM BOOK_DATA
+	                                    INNER JOIN BOOK_CLASS
+                                            ON BOOK_DATA.BOOK_CLASS_ID = BOOK_CLASS.BOOK_CLASS_ID
+                                        INNER JOIN BOOK_CODE
+                                            ON BOOK_DATA.BOOK_STATUS = BOOK_CODE.CODE_ID
+	                                    LEFT JOIN MEMBER_M
+                                            ON BOOK_DATA.BOOK_KEEPER = MEMBER_M.USER_ID
+                                    WHERE (UPPER(BOOK_DATA.BOOK_NAME) LIKE UPPER('%' + @BookName + '%') OR @BookName = '') AND
+                                          (BOOK_DATA.BOOK_CLASS_ID = @BookClass OR @BookClass = '') AND
+                                          (BOOK_DATA.BOOK_KEEPER = @BookKeeper OR @BookKeeper = '') AND
+                                          (BOOK_DATA.BOOK_STATUS = @BookStatus OR @BookStatus = '') AND
+                                           BOOK_DATA.BOOK_BOUGHT_DATE < GETDATE()
+                                    ORDER BY BookBoughtDate DESC";
                 SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
-                conn.Open();
                 sqlAdapter.Fill(dt);
                 conn.Close();
             }
@@ -74,7 +71,7 @@ namespace BMS.Dao
             int bookId;
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
-                
+                conn.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName));
@@ -84,19 +81,18 @@ namespace BMS.Dao
                 cmd.Parameters.Add(new SqlParameter("@BookNote", arg.BookNote));
                 cmd.Parameters.Add(new SqlParameter("@BookClassID", arg.BookClass));
                 cmd.CommandText = @"INSERT INTO BOOK_DATA
-                         (
-                             BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER,
-                             BOOK_BOUGHT_DATE, BOOK_NOTE, BOOK_CLASS_ID, BOOK_STATUS,
-                             BOOK_KEEPER, CREATE_DATE, CREATE_USER
-                         )
-                           VALUES
-                         (
-                             @BookName, @BookAuthor, @BookPublisher,
-                             @BookBoughtDate, @BookNote, @BookClassID, 'A',
-                             '', GETDATE(), '3008'
-                         )
-                         SELECT SCOPE_IDENTITY()";
-                conn.Open();
+                                  (
+                                        BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER,
+                                        BOOK_BOUGHT_DATE, BOOK_NOTE, BOOK_CLASS_ID, BOOK_STATUS,
+                                        BOOK_KEEPER, CREATE_DATE, CREATE_USER
+                                  )
+                                    VALUES
+                                  (
+                                        @BookName, @BookAuthor, @BookPublisher,
+                                        @BookBoughtDate, @BookNote, @BookClassID, 'A',
+                                        '', GETDATE(), '3008'
+                                  )
+                                    SELECT SCOPE_IDENTITY()";
                 bookId = Convert.ToInt32(cmd.ExecuteScalar());
                 conn.Close();
             }
@@ -152,10 +148,10 @@ namespace BMS.Dao
                 cmd.Parameters.Add(new SqlParameter("@BookStatus", arg.BookStatus));
                 cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
                 cmd.CommandText = @"UPDATE BOOK_DATA SET
-                             BOOK_NAME = @BookName, BOOK_AUTHOR = @BookAuthor, BOOK_PUBLISHER = @BookPublisher,
-                             BOOK_BOUGHT_DATE = @BookBoughtDate, BOOK_NOTE = @BookNote, BOOK_CLASS_ID = @BookClassId,
-                             BOOK_STATUS = @BookStatus, BOOK_KEEPER = @BookKeeper, MODIFY_DATE = GETDATE(), MODIFY_USER = '3008'
-                          WHERE BOOK_ID = @BookId";
+                                        BOOK_NAME = @BookName, BOOK_AUTHOR = @BookAuthor, BOOK_PUBLISHER = @BookPublisher,
+                                        BOOK_BOUGHT_DATE = @BookBoughtDate, BOOK_NOTE = @BookNote, BOOK_CLASS_ID = @BookClassId,
+                                        BOOK_STATUS = @BookStatus, BOOK_KEEPER = @BookKeeper, MODIFY_DATE = GETDATE(), MODIFY_USER = '3008'
+                                    WHERE BOOK_ID = @BookId";
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
@@ -170,16 +166,17 @@ namespace BMS.Dao
         public BMS.Model.BookUpdateArg GetBookById(string bookId)
         {
             DataTable dt = new DataTable();
-            string sql = @"Select BOOK_ID, BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER, BOOK_NOTE,
-                                  CONVERT(varchar(10), BOOK_BOUGHT_DATE, 111) AS BOOK_BOUGHT_DATE,
-                                  BOOK_CLASS_ID, BOOK_STATUS, BOOK_KEEPER
-                           From BOOK_DATA
-                           Where BOOK_ID = @BookId";
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
                 cmd.Parameters.Add(new SqlParameter("@BookId", bookId));
+                cmd.CommandText = @"Select BOOK_ID, BOOK_NAME, BOOK_AUTHOR, BOOK_PUBLISHER, BOOK_NOTE,
+                                           CONVERT(varchar(10), BOOK_BOUGHT_DATE, 111) AS BOOK_BOUGHT_DATE,
+                                           BOOK_CLASS_ID, BOOK_STATUS, BOOK_KEEPER
+                                    From BOOK_DATA
+                                    Where BOOK_ID = @BookId";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
                 dataAdapter.Fill(dt);
                 conn.Close();

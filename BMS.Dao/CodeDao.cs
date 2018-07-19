@@ -23,12 +23,15 @@ namespace BMS.Dao
         public List<SelectListItem> GetAllBookName()
         {
             DataTable dt = new DataTable();
-            string sql = @"SELECT DISTINCT BOOK_NAME AS Item
-                           FROM BOOK_DATA";
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
+                string sql = @"SELECT DISTINCT BOOK_NAME AS Item
+                               FROM BOOK_DATA";
                 conn.Open();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, conn);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
                 dataAdapter.Fill(dt);
                 conn.Close();
             }
@@ -43,12 +46,14 @@ namespace BMS.Dao
         public List<SelectListItem> GetAllBookKeeper()
         {
             DataTable dt = new DataTable();
-            string sql = @"SELECT DISTINCT USER_ENAME AS Ename, USER_CNAME AS Cname, USER_ID AS Id
-                           FROM MEMBER_M";
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
                 conn.Open();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, conn);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = @"SELECT DISTINCT USER_ENAME AS Ename, USER_CNAME AS Cname, USER_ID AS Id
+                                    FROM MEMBER_M";
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
                 dataAdapter.Fill(dt);
                 conn.Close();
             }
@@ -63,13 +68,15 @@ namespace BMS.Dao
         public List<SelectListItem> GetAllBookStatus()
         {
             DataTable dt = new DataTable();
-            string sql = @"SELECT DISTINCT CODE_NAME AS Item, CODE_ID AS Id
-                           FROM BOOK_CODE
-                           WHERE CODE_TYPE = 'BOOK_STATUS'";
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
                 conn.Open();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, conn);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = @"SELECT DISTINCT CODE_NAME AS Item, CODE_ID AS Id
+                                    FROM BOOK_CODE
+                                    WHERE CODE_TYPE = 'BOOK_STATUS'";
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
                 dataAdapter.Fill(dt);
                 conn.Close();
             }
@@ -84,12 +91,14 @@ namespace BMS.Dao
         public List<SelectListItem> GetAllBookClass()
         {
             DataTable dt = new DataTable();
-            string sql = @"SELECT DISTINCT BOOK_CLASS_NAME AS Item, BOOK_CLASS_ID AS Id
-                           FROM BOOK_CLASS";
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
                 conn.Open();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, conn);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = @"SELECT DISTINCT BOOK_CLASS_NAME AS Item, BOOK_CLASS_ID AS Id
+                                    FROM BOOK_CLASS";
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
                 dataAdapter.Fill(dt);
                 conn.Close();
             }
