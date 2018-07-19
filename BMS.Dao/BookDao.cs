@@ -111,12 +111,13 @@ namespace BMS.Dao
         {
             try
             {
-                string sql = "Delete FROM BOOK_DATA Where BOOK_ID=@BookId";
                 using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = conn;
                     cmd.Parameters.Add(new SqlParameter("@BookId", bookId));
+                    cmd.CommandText = "Delete FROM BOOK_DATA Where BOOK_ID=@BookId";
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -135,16 +136,12 @@ namespace BMS.Dao
         /// <returns></returns>
         public string UpdateBook(BMS.Model.BookUpdateArg arg)
         {
-            string sql = @"UPDATE BOOK_DATA SET
-                             BOOK_NAME = @BookName, BOOK_AUTHOR = @BookAuthor, BOOK_PUBLISHER = @BookPublisher,
-                             BOOK_BOUGHT_DATE = @BookBoughtDate, BOOK_NOTE = @BookNote, BOOK_CLASS_ID = @BookClassId,
-                             BOOK_STATUS = @BookStatus, BOOK_KEEPER = @BookKeeper, MODIFY_DATE = GETDATE(), MODIFY_USER = '3008'
-                          WHERE BOOK_ID = @BookId";
 
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
                 cmd.Parameters.Add(new SqlParameter("@BookId", arg.BookId));
                 cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName));
                 cmd.Parameters.Add(new SqlParameter("@BookAuthor", arg.BookAuthor));
@@ -154,6 +151,11 @@ namespace BMS.Dao
                 cmd.Parameters.Add(new SqlParameter("@BookClassId", arg.BookClass));
                 cmd.Parameters.Add(new SqlParameter("@BookStatus", arg.BookStatus));
                 cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
+                cmd.CommandText = @"UPDATE BOOK_DATA SET
+                             BOOK_NAME = @BookName, BOOK_AUTHOR = @BookAuthor, BOOK_PUBLISHER = @BookPublisher,
+                             BOOK_BOUGHT_DATE = @BookBoughtDate, BOOK_NOTE = @BookNote, BOOK_CLASS_ID = @BookClassId,
+                             BOOK_STATUS = @BookStatus, BOOK_KEEPER = @BookKeeper, MODIFY_DATE = GETDATE(), MODIFY_USER = '3008'
+                          WHERE BOOK_ID = @BookId";
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
