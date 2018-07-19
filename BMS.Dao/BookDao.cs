@@ -27,7 +27,16 @@ namespace BMS.Dao
         public List<BMS.Model.BookSearchResult> GetBookByCondition(BMS.Model.BookSearchArg arg)
         {
             DataTable dt = new DataTable();
-            string sql = @"SELECT BOOK_DATA.BOOK_ID AS BookId,
+            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString())){
+            
+                
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName ?? string.Empty));
+                cmd.Parameters.Add(new SqlParameter("@BookClass", arg.BookClass ?? string.Empty));
+                cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
+                cmd.Parameters.Add(new SqlParameter("@BookStatus", arg.BookStatus ?? string.Empty));
+				cmd.CommandText = "SELECT BOOK_DATA.BOOK_ID AS BookId,
                                   BOOK_CLASS.BOOK_CLASS_NAME AS BookClass,
                                   BOOK_DATA.BOOK_NAME AS BookName,
                                   CONVERT(varchar(10), BOOK_DATA.BOOK_BOUGHT_DATE, 111) AS BookBoughtDate,
@@ -46,18 +55,9 @@ namespace BMS.Dao
                                  (BOOK_DATA.BOOK_STATUS = @BookStatus OR @BookStatus = '') AND
                                   BOOK_DATA.BOOK_BOUGHT_DATE < GETDATE()
                            ORDER BY BookBoughtDate DESC";
-            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString())){
-            
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(sql);
                 
-                cmd.Parameters.Add(new SqlParameter("@BookName", arg.BookName ?? string.Empty));
-                cmd.Parameters.Add(new SqlParameter("@BookClass", arg.BookClass ?? string.Empty));
-                cmd.Parameters.Add(new SqlParameter("@BookKeeper", arg.BookKeeper ?? string.Empty));
-                cmd.Parameters.Add(new SqlParameter("@BookStatus", arg.BookStatus ?? string.Empty));
-                cmd.Connection = conn;
                 SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
-                
+                conn.Open();
                 sqlAdapter.Fill(dt);
                 conn.Close();
             }
