@@ -1,0 +1,117 @@
+﻿﻿<title>UpdateBook</title>
+
+<h2>修改書籍</h2>
+
+<form id="Form_Update">
+
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookName">書名</label>
+            <div class="col-md-10">
+                <input class="k-textbox" id="BookName" name="BookName" type="text" value="" style="width: 30%" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookAuthor">作者</label>
+            <div class="col-md-10">
+                <input class="k-textbox" id="BookAuthor" name="BookAuthor" type="text" value="" style="width: 30%" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookPublisher">出版商</label>
+            <div class="col-md-10">
+                <input class="k-textbox" id="BookPublisher" name="BookPublisher" type="text" value="" style="width: 30%" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookNote">內容簡介</label>
+            <div class="col-md-10">
+                <textarea class="k-textbox" cols="20" id="BookNote" name="BookNote" rows="4" style="width: 30%" required></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookBoughtDate">購書日期</label>
+            <div class="col-md-10">
+                <input class="k-textbox" id="BookBoughtDate" name="BookBoughtDate" value="" style="width: 30%" onkeydown="return false;" onmousedown="return false;" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookClass">圖書類別</label>
+            <div class="col-md-10">
+                <select id="BookClass" name="BookClass" style="width: 30%" required>
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookStatus">借閱狀態</label>
+            <div class="col-md-10">
+                <select id="BookStatus" name="BookStatus" style="width: 30%" required>
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookKeeper">借閱人</label>
+            <div class="col-md-10">
+                <select id="BookKeeper" name="BookKeeper" style="width: 30%">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a class="k-button" href="/Book">回前一頁</a>
+
+                <a class="k-button" href="#" id="btnDelete">刪除</a>
+                <input type="hidden" value="" id="BookId" />
+
+                <input type="button" value="存檔" class="k-button" id="submit" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a href="/Book">Back to Home</a>
+</div>
+
+<div id="update_delete_window"></div>
+<script type="text/x-kendo-template" id="update_delete_template">
+    <br />
+    <p style="font-size:25px">確定刪除此書?</p>
+    <div class="btn">
+        <button class="k-button" id="update_del_yes">確定</button>
+        <button class="k-button" id="update_del_no">取消</button>
+    </div>
+</script>
+
+<div id="update_lended_window"></div>
+<script type="text/x-kendo-template" id="update_lended_template">
+    <br />
+    <p style="font-size:25px">這本書已借出 無法刪除</p>
+    <div class="btn">
+        <button class="k-button" id="update_lended_yes">確定</button>
+    </div>
+</script>
+
+<div id="update_save_window"></div>
+<script type="text/x-kendo-template" id="update_save_template">
+    <br />
+    <p style="font-size:25px">存檔成功</p>
+    <div class="btn">
+        <button class="k-button" id="update_save_yes">確定</button>
+    </div>
+</script>
+
+<script src="~/Scripts/BookScripts/UpdateBook.js"></script>

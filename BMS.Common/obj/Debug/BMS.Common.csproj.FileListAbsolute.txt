@@ -1,0 +1,9 @@
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Common\bin\Debug\BMS.Common.dll
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Common\bin\Debug\BMS.Common.pdb
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Common\obj\Debug\BMS.Common.csprojAssemblyReference.cache
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Common\obj\Debug\BMS.Common.csproj.CoreCompileInputs.cache
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Common\obj\Debug\BMS.Common.dll
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Common\obj\Debug\BMS.Common.pdb
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Common\bin\Debug\log4net.dll
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Common\bin\Debug\log4net.xml
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Common\obj\Debug\BMS.Common.csproj.CopyComplete

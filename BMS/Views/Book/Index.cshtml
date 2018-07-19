@@ -1,0 +1,79 @@
+﻿﻿<title>SearchBook</title>
+
+<h2>圖書維護</h2>
+
+<form id="Form_Search">
+
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookName">書名</label>
+            <div class="col-md-10">
+                <input class="k-textbox" id="BookName" name="BookName" type="text" value="" style="width: 30%" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookClass">圖書類別</label>
+            <div class="col-md-10">
+                <select class="form-control" id="BookClass" name="BookClass" style="width: 30%">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookKeeper">借閱人</label>
+            <div class="col-md-10">
+                <select class="form-control" id="BookKeeper" name="BookKeeper" style="width: 30%">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="BookStatus">借閱狀態</label>
+            <div class="col-md-10">
+                <select class="form-control" id="BookStatus" name="BookStatus" style="width: 30%">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-10">
+                <input type="button" value="查詢" class="k-button" id="search" />
+                <a href="/Book" class="k-button">清除</a>
+                <a href="/Book/AddBook" class="k-button">新增</a>
+            </div>
+        </div>
+
+        <div>
+            <div id="book_grid"></div>
+        </div>
+    </div>
+</form>
+
+<div id="search_delete_window"></div>
+<script type="text/x-kendo-template" id="search_delete_template">
+    <br />
+    <p style="font-size:25px">確定刪除此書?</p>
+    <div class="btn">
+        <button class="k-button" id="search_del_yes">確定</button>
+        <button class="k-button" id="search_del_no">取消</button>
+    </div>
+</script>
+
+<div id="search_lended_window"></div>
+<script type="text/x-kendo-template" id="search_lended_template">
+    <br />
+    <p style="font-size:25px">這本書已借出 無法刪除</p>
+    <div class="btn">
+        <button class="k-button" id="search_lended_yes">確定</button>
+    </div>
+</script>
+
+<script src="~/Scripts/BookScripts/Index.js"></script>

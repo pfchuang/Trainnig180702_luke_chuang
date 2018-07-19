@@ -1,0 +1,10 @@
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\bin\Debug\BMS.Model.dll
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\bin\Debug\BMS.Model.pdb
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\bin\Debug\System.Web.Mvc.dll
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\bin\Debug\System.Web.Mvc.xml
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\bin\Debug\zh-Hant\System.Web.Mvc.resources.dll
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\obj\Debug\BMS.Model.csprojAssemblyReference.cache
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\obj\Debug\BMS.Model.csproj.CoreCompileInputs.cache
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\obj\Debug\BMS.Model.csproj.CopyComplete
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\obj\Debug\BMS.Model.dll
+C:\Users\DELL\OneDrive - hk513\Training\BMS\BMS.Model\obj\Debug\BMS.Model.pdb
